@@ -1,0 +1,27 @@
+.boxFlex{/*flex*/
+    display: flex;
+}
+.boxFlexLeft{
+    display: flex;
+    align-self: flex-start;
+}
+.boxFlexRight{
+    display: flex;
+    align-self: flex-end;
+}
+.boxFlexCenter{
+    display: flex;
+    justify-content: center;
+}
+.boxHorizontal{/*cajas en columnas || */
+    display: flex;
+    flex-direction: row;
+}
+.boxVertical{/*cajas en filas = */
+    display: flex;
+    flex-direction: column;
+}
+.boxEspacio{/*pone un spacio entre los elementos*/
+    display: flex;
+    justify-content: space-between;
+}

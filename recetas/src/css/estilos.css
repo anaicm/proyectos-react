@@ -1,0 +1,99 @@
+.bordeContainer{
+    border: 10px solid #282b51;
+    margin: 20px;
+}
+.container{
+    padding: 20px;
+    /*border: 10px solid #282b51;*/
+    color:#8d9498;
+    border-radius: 10px;
+    
+}
+.container>img{
+    width: 100%;
+    height: 50%;
+    z-index: 1; /* Asegurar que las imágenes estén por debajo del título */
+}
+.containerImg{
+    width: 50%;
+    z-index: -1;
+    padding-top: 10px;       
+}
+.marginLeft{
+    padding-left: 10px;
+}
+.containerTitulo{
+    z-index: 2;
+    position: absolute;
+    top:354%
+}
+.containerReceta{
+    position: absolute;
+    left: 0;
+    padding-bottom: 10%;
+}
+button{
+    position: absolute;
+    bottom: 0%;
+    left: 40%;
+    background-color: #09f;
+    color: aliceblue;
+    width: 200px;
+    height: 50px;
+    border-radius: 20px;
+    font-size: 15px;
+}
+button:hover{
+    background-color: rgb(4, 37, 58);
+}
+@media screen and (max-width: 767px), (max-width: 970px){
+    .boxHorizontal {
+      display: flex;
+      flex-direction: column;
+    }
+    .bordeContainer {
+        border: none; /* Eliminar el borde en la vista móvil */
+        margin: 0; /* Eliminar el margen en la vista móvil */
+    }
+    .container {
+        padding:0;
+        width: 100%; /* Asegurar que el contenedor ocupe todo el ancho disponible */
+        color: #8d9498;
+        border-radius: 0; /* Eliminar el radio de borde en la vista móvil */    
+    }
+    .containerImg {
+      /* Añade cualquier estilo adicional que necesites para las imágenes en la vista móvil */
+      width: 100%; /* Esto asegura que las imágenes ocupen todo el ancho de su contenedor */
+      height: auto; /* Esto asegura que las imágenes conserven su relación de aspecto */
+      padding-top: 10px;
+    }
+    .container>img{
+        width: 100%;
+        height: auto;
+       
+    }
+    .containerReceta {
+        width: 100%; /* Ajustar el ancho para ocupar todo el espacio disponible */
+        padding-bottom: 0;;
+        padding: 0 20px; /* Agregar relleno a los lados */
+        position: relative; /* Cambiar el posicionamiento del contenedor a relativo */
+    }
+    button {
+        position: relative; /* Cambiar el posicionamiento del botón a relativo */
+        bottom: 40%; /* Asegurarse de que el botón esté en la parte inferior del contenedor */
+        left: 0%;
+
+       
+       
+        width: 100px;
+        height: 25px;
+        border-radius: 20px;
+        font-size: 10px;
+    }
+    .marginLeft{
+        padding-left: 0;
+    }
+   
+
+  }
+  

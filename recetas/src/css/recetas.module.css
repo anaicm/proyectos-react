@@ -1,0 +1,26 @@
+.tituloReceta{
+font-size: 20px;
+color: black;
+border-bottom: 1px solid black;
+}
+.textoReceta{
+    font-size: 16px;
+}
+.containerReceta{
+    width: 50%;
+}
+@media screen and (max-width: 767px) {
+  
+    .tituloReceta {
+        position: static; /* Volver al posicionamiento estático */
+        font-size: 18px; /* Tamaño de fuente más pequeño para el título en la vista móvil */
+        margin-top: 10px; /* Espacio superior adicional para separar el título de otros elementos */
+    }
+    .textoReceta{
+        font-size: 14px;
+    }
+    .containerReceta{
+        width: auto;
+    }
+
+  }
