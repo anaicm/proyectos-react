@@ -1,11 +1,9 @@
-
-import './App.css';
-import Principal from './componentes/principal';
+import {Navegación} from './componentes';
 
 function App() {
   return (
-    <div className="App">
-  <Principal/>
+    <div>
+  <Navegación/>
     </div>
   );
 }

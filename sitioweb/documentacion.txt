@@ -1,0 +1,13 @@
+Instalación de proyecto bootstrapa 
+=> npm install bootstrap
+Importar en el componente que se va a usar 
+=> import 'bootstrap/dist/css/bootstrap.min.css'; 
+Si falla 
+=>npm install react-bootstrap bootstrap
+en el compontete 
+import React from 'react';
+import { Button } from 'react-bootstrap';// por ejemplo 
+--------------------------------------------------------------------------
+Libreria para trabajar con React y bootstrap
+https://react-bootstrap.netlify.app/docs/components/breadcrumb
+
