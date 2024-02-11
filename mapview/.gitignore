@@ -1,0 +1,8 @@
+﻿################################################################################
+# Este archivo .gitignore ha sido creado automáticamente por Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/data-overlay-hover
+/.vs
+/node_modules/.cache/default-development
+/node_modules
