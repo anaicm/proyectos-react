@@ -1,10 +1,11 @@
 import React from 'react';
-import Map from './Map';
+import MapCircunferencia from'./components/Maps/MapCircunferencia';
+//import MapOriginal from './components/Maps/MapOriginal';
 
 function App() {
   return (
     <div>
-      <Map />
+      <MapCircunferencia />
     </div>
   );
 }
