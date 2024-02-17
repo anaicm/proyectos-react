@@ -1,16 +1,18 @@
+//esta componente muestra una mapa con una línea que representa una ruta específica definida
+//por una serie de coordenadas.
 import React, { useRef, useEffect, useState } from "react";
-import mapboxgl from "mapbox-gl";
-import "../../Map.css";
-
+import mapboxgl from "mapbox-gl";//importa la biblioteca de Mapbox GL JS 
+import "../../Map.css";//archivo de estilos
+//token de acceso de Mapbox GL JS
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYWxlamFuZHJvLXBlcmV6IiwiYSI6ImNsczNrZG5kNDAwazQyaW84d21zeXViNDAifQ.LguyBzAlUB2A7aCRp0tTjQ";
 
 const MapAddLinea = () => {
-  const mapContainerRef = useRef(null);
-  const [map, setMap] = useState(null);
+  const mapContainerRef = useRef(null);//referencia al contenedor del mapa en el DOM
+  const [map, setMap] = useState(null);// almacenará la instancia del mapa.
 
   useEffect(() => {
-    const map = new mapboxgl.Map({
+    const map = new mapboxgl.Map({// nueva instancia del mapa
       container: mapContainerRef.current,
       style: "mapbox://styles/mapbox/streets-v11",
       center: [-122.486052, 37.830348],
@@ -18,12 +20,13 @@ const MapAddLinea = () => {
     });
 
     map.on("load", () => {
-      map.addSource("route", {
+      map.addSource("route", {//'route' añade una nueva fuente de datos para el GeoJson
         type: "geojson",
         data: {
-          type: "Feature",
+          type: "Feature",//'feautre' objeto que contiene la fuente
           properties: {},
           geometry: {
+            //geometría de tipo LineString, que representa la línea que se dibujará en el mapa.
             type: "LineString",
             coordinates: [
               [-122.483696, 37.833818],
@@ -53,9 +56,9 @@ const MapAddLinea = () => {
       });
 
       map.addLayer({
-        id: "route",
-        type: "line",
-        source: "route",
+        id: "route",//fuente que usa la capa 
+        type: "line",//tipo de la capa 
+        source: "route",//fuente
         layout: {
           "line-join": "round",
           "line-cap": "round",
