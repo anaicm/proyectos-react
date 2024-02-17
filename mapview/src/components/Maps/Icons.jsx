@@ -31,7 +31,7 @@ const Icons = () => {
      
       const width = marker.properties.iconSize[0];
       const height = marker.properties.iconSize[1];
-      const background = marker.properties.imagen; //${background}
+      const background = marker.properties.imagen; 
       
       el.className = "marker";
       el.style.backgroundImage = `url(${getImage(background)})`;
