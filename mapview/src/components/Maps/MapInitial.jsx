@@ -9,6 +9,7 @@ import {
   CapaTerremotos,
   CapaTerremotosNoAgrupados,
   CapaTerremotosRecuento,
+  addRouteLayer,
 } from "../funciones";
 import {
   handleClusterClick,
@@ -52,6 +53,41 @@ const MapInitial = () => {
         clusterMaxZoom: 14, //minimo de cuando te acercas, si te acercas 14 no se ve ningun cluster
         clusterRadius: 250, //radio de la circunferencia que abarca
       });
+      //fuente para la capa que pinta una ruta en línea en el mapa 
+      map.addSource("route", {//'route' añade una nueva fuente de datos para el GeoJson
+        type: "geojson",
+        data: {
+          type: "Feature",//'feautre' objeto que contiene la fuente
+          properties: {},
+          geometry: {
+            //geometría de tipo LineString, que representa la línea que se dibujará en el mapa.
+            type: "LineString",
+            coordinates: [
+              [-122.483696, 37.833818],
+              [-122.483482, 37.833174],
+              [-122.483396, 37.8327],
+              [-122.483568, 37.832056],
+              [-122.48404, 37.831141],
+              [-122.48404, 37.830497],
+              [-122.483482, 37.82992],
+              [-122.483568, 37.829548],
+              [-122.48507, 37.829446],
+              [-122.4861, 37.828802],
+              [-122.486958, 37.82931],
+              [-122.487001, 37.830802],
+              [-122.487516, 37.831683],
+              [-122.488031, 37.832158],
+              [-122.488889, 37.832971],
+              [-122.489876, 37.832632],
+              [-122.490434, 37.832937],
+              [-122.49125, 37.832429],
+              [-122.491636, 37.832564],
+              [-122.492237, 37.833378],
+              [-122.493782, 37.833683],
+            ],
+          },
+        },
+      });
 
       // capa areas urbanas
       map.addLayer(UrbanAreasLayer());
@@ -61,6 +97,8 @@ const MapInitial = () => {
       map.addLayer(CapaTerremotos());
       map.addLayer(CapaTerremotosNoAgrupados());
       map.addLayer(CapaTerremotosRecuento());
+      //capa para la línea de la ruta en el mapa 
+      addRouteLayer(map);
       setMap(map);
     });
 
