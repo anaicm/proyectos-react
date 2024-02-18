@@ -32,7 +32,8 @@ const Icons = () => {
       const width = marker.properties.iconSize[0];
       const height = marker.properties.iconSize[1];
       const background = marker.properties.imagen; 
-      
+      //getImagen es la función que muestra las imagenes que vienen por por la properti del json
+      //que esta en data=>dataMapIconsPersonalizados.js
       el.className = "marker";
       el.style.backgroundImage = `url(${getImage(background)})`;
       el.style.width = `${width}px`;
