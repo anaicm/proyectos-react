@@ -1,6 +1,5 @@
 // Función para manejar el clic en clusters
 import mapboxgl from "mapbox-gl";
-
 export const handleClusterClick = (map) => {
     map.on("click", "clusters", (e) => {
       const features = map.queryRenderedFeatures(e.point, {
@@ -19,6 +18,8 @@ export const handleClusterClick = (map) => {
   
   // Función para manejar el clic en puntos no agrupados
   export const handleUnclusteredPointClick = (map) => {
+    let popup = new mapboxgl.Popup();
+
     map.on("click", "unclustered-point", (e) => {
       const coordinates = e.features[0].geometry.coordinates.slice();
       const mag = e.features[0].properties.mag;
@@ -26,13 +27,17 @@ export const handleClusterClick = (map) => {
       while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
         coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
       }
-      new mapboxgl.Popup()
+      popup
         .setLngLat(coordinates)
         .setHTML(`magnitude: ${mag}<br>Was there a tsunami?: ${tsunami}`)
         .addTo(map);
     });
+
+    map.on("mouseleave", "unclustered-point", (e) => {
+      popup.remove();
+    });
   };
-  
+
   // Función para manejar el evento de entrada en clusters
   export const handleClusterMouseEnter = (map) => {
     map.on("mouseenter", "clusters", () => {
