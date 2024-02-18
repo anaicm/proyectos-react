@@ -10,6 +10,7 @@ import {
   CapaTerremotosNoAgrupados,
   CapaTerremotosRecuento,
   addRouteLayer,
+  
 } from "../funciones";
 import {
   handleClusterClick,
@@ -17,6 +18,8 @@ import {
   handleClusterMouseEnter,
   handleClusterMouseLeave,
 } from "../funciones/eventosTerremotos";
+import {SetupPopup, 
+handleUnclusteredPointHover} from "../funciones/eventoHoverLeyenda";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYWxlamFuZHJvLXBlcmV6IiwiYSI6ImNsczNrZG5kNDAwazQyaW84d21zeXViNDAifQ.LguyBzAlUB2A7aCRp0tTjQ";
@@ -109,9 +112,11 @@ const MapInitial = () => {
   useEffect(() => {
     if (map) {
       handleClusterClick(map);
-      handleUnclusteredPointClick(map);
-      handleClusterMouseEnter(map);
-      handleClusterMouseLeave(map);
+      //handleUnclusteredPointClick(map);//evento que abre el pop up al hacer click
+      //handleClusterMouseEnter(map);//maneja el evento para cambiar el raton dentro del el pop up
+      //handleClusterMouseLeave(map);//maneja el evento para cerrar el pop up
+      handleUnclusteredPointHover(map);//evento para el hover raton por encima 
+      SetupPopup(map);//evento para pop up del hover 
     }
   }, [map]);
   //------------------------Cambia el mapa al modo noche--------------------------------------------
