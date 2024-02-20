@@ -3,6 +3,7 @@ import React, { useRef, useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "../../Map.css";
 import styles from "../../css/button.module.css";
+import stylesSelectMap from '../../css/selectMap.module.css';
 import {
   UrbanAreasLayer,
   CapaIconos,
@@ -144,8 +145,16 @@ const MapInitial = () => {
       >
         Dark Mode
       </button>
-
+      <div className={stylesSelectMap.container}>
+        <list>
+          <ul className={stylesSelectMap.list}>Mapa original</ul>
+          <ul className={stylesSelectMap.list}>Cluster de terremotos</ul>
+          <ul className={stylesSelectMap.list}>rutas</ul>
+          <ul className={stylesSelectMap.list}>Imagen</ul>
+        </list>
+      </div>
       <div ref={mapContainerRef} className="map-container" />
+   
     </div>
   );
 };
