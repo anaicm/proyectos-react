@@ -8,6 +8,7 @@
     z-index: 2;
     height: 200px;
     width: 200px;
+    cursor: pointer;
 }
 .list{
     margin-left: 20px;
