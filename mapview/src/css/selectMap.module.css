@@ -7,9 +7,12 @@
     color: aliceblue;
     z-index: 2;
     height: 200px;
-    width: 200px;
+    width: 250px;
     cursor: pointer;
 }
 .list{
     margin-left: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-right: 10px;
 }
