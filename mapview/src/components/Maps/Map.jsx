@@ -36,7 +36,7 @@ const Map = () => {
         id: "urban-areas-fill",//el id un nombre de la capa, el que se quiera. fill =relleno
         type: "fill",//rellena lo que hay dentro de los poligonos y se rellena con el color que hay en 
         //paint.
-        slot: "middle",
+        slot: "middle",//slot => actua como un marcador de posición pueden ser (bottom, middle, top)
         source: "urban-areas",//valor de addSource
         layout: {},
         paint: {//relleno para los poligonos
