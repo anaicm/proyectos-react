@@ -34,6 +34,7 @@ const MapCircunferenciaTerremotos = () => {
           source: "earthquakes", //"earthquakes" => fuente de archivo GeoJson de terremotos
           //has => tiene, si hay puntos, cuenta los puntos =>
           filter: ["has", "point_count"], //=> point_count => cuenta los puntos que hay en un cluster
+          //debe de ser una propiedad que venga del geojson 
           paint: {
             //el color y el radio depende del recuento de puntos en el cluster
             "circle-color": [
@@ -76,7 +77,7 @@ const MapCircunferenciaTerremotos = () => {
           //filter: ["has", "point_count"]: Aplica un filtro a esta capa para que solo se muestre
           //cuando un cluster tiene un recuento de puntos. Esto asegura que solo se muestre el
           //recuento de puntos en los clusters y no en los puntos individuales.
-          filter: ["has", "point_count"],
+          filter: ["has", "point_count"],//=> si hay puntos
           //layout: { ... }: Define el diseño de la capa.
           layout: {
             //"text-field": ["get", "point_count_abbreviated"]: Especifica el texto que se mostrará
