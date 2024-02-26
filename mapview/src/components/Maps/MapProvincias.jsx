@@ -4,7 +4,6 @@ import React, { useRef, useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl";
 //import geojson from "../data/DataIcons";
 
-
 import "../../Map.css";
 
 mapboxgl.accessToken =
@@ -32,7 +31,7 @@ const MapProvincias = () => {
       });
       map.addLayer({
         //Layer=Capa,
-        id: "urban-provincias-vector", //el id un nombre de la capa, el que se quiera. fill =relleno
+        id: "urban-provincias-layer", //el id un nombre de la capa, el que se quiera. fill =relleno
         type: "fill", //rellena lo que hay dentro de los poligonos y se rellena con el color que hay en
         //paint.
         slot: "middle", //slot => actua como un marcador de posición pueden ser (bottom, middle, top)
@@ -49,14 +48,20 @@ const MapProvincias = () => {
         closeOnClick: false,
       });
 
-      map.on("mouseenter", "urban-provincias-vector", (e) => {
+      map.on("mouseenter", "urban-provincias-layer", (e) => {
         //coge la propiedad del json en este caso "provincia"
         const provinceName = e.features[0].properties.provincia;
         //la añade al mapa la propiedad.
         popup.setLngLat(e.lngLat).setHTML(provinceName).addTo(map);
+        map.getCanvas().style.cursor = "pointer"; // Cambiar cursor a pointer
+        map.setPaintProperty("urban-provincias-layer", "fill-opacity", 1); // Cambiar la opacidad del polígono
       });
-      //elimina el pop up cuando el raton sale del área
-      map.on("mouseleave", "urban-provincias-vector", () => {
+      //elimina el pop up cuando el raton sale del área y vuelve el cursor a su forma original
+      map.on("mouseleave", "urban-provincias-layer", () => {
+        if (map.getCanvas()) {
+            map.getCanvas().style.cursor = ""; // Restaurar cursor por defecto
+            map.setPaintProperty("urban-provincias-layer", "fill-opacity", 0.4); // Restaurar opacidad original
+          }
         popup.remove();
       });
     });
