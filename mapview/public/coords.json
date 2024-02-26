@@ -1,0 +1,60 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "provincia": "Madrid"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [-4.524, 40.073],
+              [-4.524, 41.024],
+              [-3.041, 41.024],
+              [-3.041, 40.073],
+              [-4.524, 40.073]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "provincia": "Barcelona"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [1.9, 41.0],
+              [1.9, 41.9],
+              [2.9, 41.9],
+              [2.9, 41.0],
+              [1.9, 41.0]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "provincia": "Valencia"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [-0.59, 38.76],
+              [-0.59, 39.87],
+              [0.91, 39.87],
+              [0.91, 38.76],
+              [-0.59, 38.76]
+            ]
+          ]
+        }
+      }
+    ]
+  }
+  
