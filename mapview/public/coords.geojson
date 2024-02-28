@@ -3,7 +3,9 @@
     "features": [
       {
         "type": "Feature",
+        "id":1,
         "properties": {
+          "id":1,
           "provincia": "Madrid"
         },
         "geometry": {
@@ -21,7 +23,9 @@
       },
       {
         "type": "Feature",
+        "id":2,
         "properties": {
+          "id":2,
           "provincia": "Barcelona"
         },
         "geometry": {
@@ -39,7 +43,9 @@
       },
       {
         "type": "Feature",
+        "id":3,
         "properties": {
+          "id":3,
           "provincia": "Valencia"
         },
         "geometry": {
