@@ -27,8 +27,8 @@ const MapPrincipal = () => {
   const mapContainerRef = useRef(null); //se tiene que poner
   const [map, setMap] = useState(null); //constante para guardar el mapa
   //estado para las coordenadas de donde inicializar
-  const [centro, setCentro] = useState([-87.622088, 41.878781]);
-  const [mapZoom, setMapZoom] = useState(10);
+  const [centro, setCentro] = useState([0, 40]);
+  const [mapZoom, setMapZoom] = useState(6);
   //constante para cambiar el mapa de noche a dia
   const [nightMode, setNightModeMode] = useState(false);
   const [clusterOpen, setClusterOpen] = useState(false);
@@ -36,6 +36,7 @@ const MapPrincipal = () => {
   const [urbansBosque, setUrbansBosque] = useState(false);
   const [urbansRutas, setUrbansRutas] = useState(false);
   const [urbansImagen, setUrbansImagen] = useState(false);
+  const [urbansProvincias, setUrbansProvincias] = useState(false);
   // Initialize map when component mounts
   useEffect(() => {
     //la primera vez que carga el componente map, no tiene dependencias []
@@ -46,36 +47,9 @@ const MapPrincipal = () => {
       center: centro,
       zoom: mapZoom,
     });
-    map.on("style.load", () => {
-      map.addSource("countries", {
-        type: "vector",
-        tiles: [
-          "https://api.maptiler.com/tiles/countries/{z}/{x}/{y}.pbf?key=RZxGqTFix5IeutYU7exD",
-        ],
-        minzoom: 6,
-        maxzoom: 14,
-      });
-      //capa
-      map.addLayer(
-        {
-          id: "countries-fill", // Layer ID
-          type: "fill",
-        
-          source: "countries", // ID of the tile source created above
-          // Source has several layers. We visualize the one with name 'sequence'.
-          "source-layer": "countries",
-          layout: {},
-          paint: {
-            "fill-opacity": 0.6,
-            "fill-color": "rgb(53, 175, 109)",
-           
-          },
-        },
-       
-      );
-
-      map.addControl(new mapboxgl.NavigationControl());
-    });
+    map.addControl(new mapboxgl.NavigationControl());
+    // map.on("style.load", () => {
+    //});
     setMap(map);
     return () => map.remove();
   }, [centro, mapZoom]);
@@ -198,6 +172,119 @@ const MapPrincipal = () => {
       }
     }
   };
+  //funcion para la capa Provincias
+  const handleLayerProvincias = () => {
+    setUrbansProvincias(!urbansProvincias); //
+    //abre la capa del mapa
+    if (map && !urbansProvincias) {
+      //si hay mapa y esta en verdadero
+      if (!map.getSource("urban-provincias")) {
+        //si el mapa es distinto a la fuente del parametro
+        map.addSource("urban-provincias", {
+          type: "geojson", //formato de lo que viene por la api
+          data: "http://localhost:3000/coords.geojson", //URL donde estan todos los datos
+        });
+      }
+
+      //añade la capa
+      map.addLayer({
+        //capa para el relleno del poligono
+        id: "urban-provincias-layer",
+        type: "fill",
+        source: "urban-provincias",
+        layout: {},
+        paint: {
+          "fill-color": "#627BC1",
+          "fill-opacity": [
+            "case",
+            ["boolean", ["feature-state", "hover"], false],
+            1,
+            0.5,
+          ],
+        },
+      });
+      map.addLayer({
+        //capa para el borde del poligono
+        id: "state-borders",
+        type: "line",
+        source: "urban-provincias",
+        layout: {},
+        paint: {
+          //"line-color": "#627BC1",=> poner solo un color
+          "line-color": [
+            //si hace hover cambiar el color del borde a blanco de #627BC1
+            "case",
+            ["boolean", ["feature-state", "hover"], false],
+            "white",
+            "#627BC1",
+          ],
+          //"line-width": 2,
+          "line-width": [
+            //si hace hover cambia el ancho del borde a 3 de 1
+            "case",
+            ["boolean", ["feature-state", "hover"], false],
+            3,
+            1,
+          ],
+        },
+      });
+      const popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false,
+      });
+      let hoveredPolygonId = null;
+      //evento para cambiar la opacidad solo del id donde se encuentre el raton (hover)
+      map.on("mousemove", "urban-provincias-layer", (e) => {
+        if (e.features.length > 0) {
+          if (hoveredPolygonId !== null) {
+            map.setFeatureState(
+              { source: "urban-provincias", id: hoveredPolygonId },
+              { hover: false }
+            );
+          }
+          hoveredPolygonId = e.features[0].id;
+          map.setFeatureState(
+            { source: "urban-provincias", id: hoveredPolygonId },
+            { hover: true }
+          );
+        }
+      });
+      //cuando el raton sale de la feature vuelve a ponerla en su estado inicial sin hover
+      map.on("mouseleave", "urban-provincias-layer", () => {
+        if (hoveredPolygonId !== null) {
+          map.setFeatureState(
+            { source: "urban-provincias", id: hoveredPolygonId },
+            { hover: false }
+          );
+        }
+        hoveredPolygonId = null;
+      });
+
+      //evento para mostrar el popup con el hover
+      map.on("mousemove", "urban-provincias-layer", (e) => {
+        //coge la propiedad del json en este caso "provincia"
+        const provinceName = e.features[0].properties.provincia;
+        //la añade al mapa la propiedad.
+        popup.setLngLat(e.lngLat).setHTML(provinceName).addTo(map);
+        map.getCanvas().style.cursor = "pointer"; // Cambiar cursor a pointer
+      });
+      //elimina el pop up cuando el raton sale del área y vuelve el cursor a su forma original
+      map.on("mouseleave", "urban-provincias-layer", () => {
+        map.getCanvas().style.cursor = ""; // Restaurar cursor por defecto
+        popup.remove();
+      });
+
+      //cerrar la capa
+    } else if (map && urbansProvincias) {
+      //si hay mapa y urbansOpen=false
+      if (map.getSource("urban-provincias")) {
+        //si el mapa es esa fuente que entra por parametro
+        map.removeLayer("urban-provincias-layer"); //elimina la capa =>id=capa
+        map.removeLayer("state-borders"); //elimina la capa =>id=capa
+        map.removeSource("urban-provincias"); //elimina la fuente =>id=fuente
+      }
+    }
+  };
   //funcion para la capa Imagen
   const handleLayerImagen = () => {
     setUrbansImagen(!urbansImagen); //
@@ -220,6 +307,7 @@ const MapPrincipal = () => {
       //si hay mapa y urbansOpen=false
       if (map.getSource("Iconos")) {
         //si el mapa es esa fuente que entra por parametro
+        //map.removeLayer(CapaIconos(map));
         map.removeSource("Iconos"); //elimina la fuente =>id=fuente
       }
     }
@@ -322,6 +410,22 @@ const MapPrincipal = () => {
             <div>Imagen</div>
             <div>
               {urbansImagen ? ( // Si clusterOpen es true, muestra VisibilityIcon
+                <div>
+                  <VisibilityIcon />
+                </div>
+              ) : (
+                // Si clusterOpen es false, muestra VisibilityOffIcon
+                <div>
+                  <VisibilityOffIcon />
+                </div>
+              )}
+            </div>
+          </div>
+          {/**MapProvincias------------------------- */}
+          <div className={stylesSelectMap.list} onClick={handleLayerProvincias}>
+            <div>Provincias</div>
+            <div>
+              {urbansProvincias ? ( // Si clusterOpen es true, muestra VisibilityIcon
                 <div>
                   <VisibilityIcon />
                 </div>
