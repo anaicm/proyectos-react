@@ -948,7 +948,7 @@
         "cod_ccaa": "07",
         "provincia": "\u00c1vila",
         "texto": "\u00c1vila",
-        "codigo": "05"
+        "id": "1"
       }
     },
     {
@@ -1985,7 +1985,7 @@
         "cod_ccaa": "01",
         "provincia": "C\u00e1diz",
         "texto": "C\u00e1diz",
-        "codigo": "11"
+        "id": "2"
       }
     },
     {
@@ -2960,7 +2960,7 @@
         "cod_ccaa": "10",
         "provincia": "Val\u00e8ncia",
         "texto": "Valencia",
-        "codigo": "46"
+        "id": "3"
       }
     },
     {
@@ -3917,7 +3917,7 @@
         "cod_ccaa": "01",
         "provincia": "Ja\u00e9n",
         "texto": "Ja\u00e9n",
-        "codigo": "23"
+        "id": "4"
       }
     },
     {
@@ -5596,7 +5596,7 @@
         "cod_ccaa": "05",
         "provincia": "Las Palmas",
         "texto": "Las Palmas",
-        "codigo": "35"
+        "id": "5"
       }
     },
     {
@@ -7380,7 +7380,7 @@
         "cod_ccaa": "12",
         "provincia": "Pontevedra",
         "texto": "Pontevedra",
-        "codigo": "36"
+        "id": "6"
       }
     },
     {
@@ -8435,7 +8435,7 @@
         "cod_ccaa": "07",
         "provincia": "Palencia",
         "texto": "Palencia",
-        "codigo": "34"
+        "id": "7"
       }
     },
     {
@@ -9636,7 +9636,7 @@
         "cod_ccaa": "13",
         "provincia": "Madrid",
         "texto": "Madrid",
-        "codigo": "28"
+        "id": "8"
       }
     },
     {
@@ -11037,7 +11037,7 @@
         "cod_ccaa": "06",
         "provincia": "Cantabria",
         "texto": "Cantabria",
-        "codigo": "39"
+        "id": "9"
       }
     },
     {
@@ -11916,7 +11916,7 @@
         "cod_ccaa": "16",
         "provincia": "Bizkaia",
         "texto": "Vizcaya",
-        "codigo": "48"
+        "id": "10"
       }
     },
     {
@@ -13735,7 +13735,7 @@
         "cod_ccaa": "03",
         "provincia": "Asturias",
         "texto": "Asturias",
-        "codigo": "33"
+        "id": "11"
       }
     },
     {
@@ -14715,7 +14715,7 @@
         "cod_ccaa": "01",
         "provincia": "Granada",
         "texto": "Granada",
-        "codigo": "18"
+        "id": "12"
       }
     },
     {
@@ -15573,7 +15573,7 @@
         "cod_ccaa": "17",
         "provincia": "La Rioja",
         "texto": "La Rioja",
-        "codigo": "26"
+        "id": "13"
       }
     },
     {
@@ -16724,7 +16724,7 @@
         "cod_ccaa": "08",
         "provincia": "Guadalajara",
         "texto": "Guadalajara",
-        "codigo": "19"
+        "id": "14"
       }
     },
     {
@@ -21924,7 +21924,7 @@
         "cod_ccaa": "04",
         "provincia": "Illes Balears",
         "texto": "Islas Baleares",
-        "codigo": "07"
+        "id": "15"
       }
     },
     {
@@ -23129,7 +23129,7 @@
         "cod_ccaa": "15",
         "provincia": "Navarra",
         "texto": "Navarra",
-        "codigo": "31"
+        "id": "52"
       }
     },
     {
@@ -26212,7 +26212,7 @@
         "cod_ccaa": "12",
         "provincia": "A Coru\u00f1a",
         "texto": "La Coru\u00f1a",
-        "codigo": "15"
+        "id": "16"
       }
     },
     {
@@ -27407,7 +27407,7 @@
         "cod_ccaa": "02",
         "provincia": "Teruel",
         "texto": "Teruel",
-        "codigo": "44"
+        "id": "17"
       }
     },
     {
@@ -28914,7 +28914,7 @@
         "cod_ccaa": "02",
         "provincia": "Zaragoza",
         "texto": "Zaragoza",
-        "codigo": "50"
+        "id": "18"
       }
     },
     {
@@ -29833,7 +29833,7 @@
         "cod_ccaa": "01",
         "provincia": "M\u00e1laga",
         "texto": "M\u00e1laga",
-        "codigo": "29"
+        "id": "19"
       }
     },
     {
@@ -31308,7 +31308,7 @@
         "cod_ccaa": "11",
         "provincia": "Badajoz",
         "texto": "Badajoz",
-        "codigo": "06"
+        "id": "20"
       }
     },
     {
@@ -32497,7 +32497,7 @@
         "cod_ccaa": "02",
         "provincia": "Huesca",
         "texto": "Huesca",
-        "codigo": "22"
+        "id": "21"
       }
     },
     {
@@ -33399,7 +33399,7 @@
         "cod_ccaa": "16",
         "provincia": "Araba",
         "texto": "\u00c1lava",
-        "codigo": "01"
+        "id": "22"
       }
     },
     {
@@ -35543,7 +35543,7 @@
         "cod_ccaa": "09",
         "provincia": "Girona",
         "texto": "Gerona",
-        "codigo": "17"
+        "id": "23"
       }
     },
     {
@@ -36364,7 +36364,7 @@
         "cod_ccaa": "10",
         "provincia": "Alacant",
         "texto": "Alicante",
-        "codigo": "03"
+        "id": "24"
       }
     },
     {
@@ -37223,7 +37223,7 @@
         "cod_ccaa": "14",
         "provincia": "Murcia",
         "texto": "Murcia",
-        "codigo": "30"
+        "id": "25"
       }
     },
     {
@@ -37950,7 +37950,7 @@
         "cod_ccaa": "07",
         "provincia": "Segovia",
         "texto": "Segovia",
-        "codigo": "40"
+        "id": "26"
       }
     },
     {
@@ -39012,7 +39012,7 @@
         "cod_ccaa": "07",
         "provincia": "Zamora",
         "texto": "Zamora",
-        "codigo": "49"
+        "id": "27"
       }
     },
     {
@@ -39886,7 +39886,7 @@
         "cod_ccaa": "12",
         "provincia": "Ourense",
         "texto": "Orense",
-        "codigo": "32"
+        "id": "28"
       }
     },
     {
@@ -41114,7 +41114,7 @@
         "cod_ccaa": "09",
         "provincia": "Tarragona",
         "texto": "Tarragona",
-        "codigo": "43"
+        "id": "29"
       }
     },
     {
@@ -42399,7 +42399,7 @@
         "cod_ccaa": "01",
         "provincia": "C\u00f3rdoba",
         "texto": "C\u00f3rdoba",
-        "codigo": "14"
+        "id": "30"
       }
     },
     {
@@ -43631,7 +43631,7 @@
         "cod_ccaa": "07",
         "provincia": "Le\u00f3n",
         "texto": "Le\u00f3n",
-        "codigo": "24"
+        "id": "31"
       }
     },
     {
@@ -44990,7 +44990,7 @@
         "cod_ccaa": "12",
         "provincia": "Lugo",
         "texto": "Lugo",
-        "codigo": "27"
+        "id": "32"
       }
     },
     {
@@ -46463,7 +46463,7 @@
         "cod_ccaa": "09",
         "provincia": "Barcelona",
         "texto": "Barcelona",
-        "codigo": "08"
+        "id": "33"
       }
     },
     {
@@ -47413,7 +47413,7 @@
         "cod_ccaa": "08",
         "provincia": "Cuenca",
         "texto": "Cuenca",
-        "codigo": "16"
+        "id": "34"
       }
     },
     {
@@ -48229,7 +48229,7 @@
         "cod_ccaa": "08",
         "provincia": "Albacete",
         "texto": "Albacete",
-        "codigo": "02"
+        "id": "35"
       }
     },
     {
@@ -49387,7 +49387,7 @@
         "cod_ccaa": "11",
         "provincia": "C\u00e1ceres",
         "texto": "C\u00e1ceres",
-        "codigo": "10"
+        "id": "36"
       }
     },
     {
@@ -50485,7 +50485,7 @@
         "cod_ccaa": "08",
         "provincia": "Ciudad Real",
         "texto": "Ciudad Real",
-        "codigo": "13"
+        "id": "37"
       }
     },
     {
@@ -51824,7 +51824,7 @@
         "cod_ccaa": "09",
         "provincia": "Lleida",
         "texto": "Lleida",
-        "codigo": "25"
+        "id": "38"
       }
     },
     {
@@ -52729,7 +52729,7 @@
         "cod_ccaa": "01",
         "provincia": "Almer\u00eda",
         "texto": "Almer\u00eda",
-        "codigo": "04"
+        "id": "39"
       }
     },
     {
@@ -53612,7 +53612,7 @@
         "cod_ccaa": "07",
         "provincia": "Soria",
         "texto": "Soria",
-        "codigo": "42"
+        "id": "40"
       }
     },
     {
@@ -54769,7 +54769,7 @@
         "cod_ccaa": "08",
         "provincia": "Toledo",
         "texto": "Toledo",
-        "codigo": "45"
+        "id": "41"
       }
     },
     {
@@ -56441,7 +56441,7 @@
         "cod_ccaa": "07",
         "provincia": "Burgos",
         "texto": "Burgos",
-        "codigo": "09"
+        "id": "42"
       }
     },
     {
@@ -57132,7 +57132,7 @@
         "cod_ccaa": "16",
         "provincia": "Gipuzcoa",
         "texto": "Guip\u00fazcoa",
-        "codigo": "20"
+        "id": "43"
       }
     },
     {
@@ -58215,7 +58215,7 @@
         "cod_ccaa": "07",
         "provincia": "Salamanca",
         "texto": "Salamanca",
-        "codigo": "37"
+        "id": "44"
       }
     },
     {
@@ -58281,7 +58281,7 @@
         "cod_ccaa": "19",
         "provincia": "Melilla",
         "texto": "Melilla",
-        "codigo": "52"
+        "id": "45"
       }
     },
     {
@@ -59085,7 +59085,7 @@
         "cod_ccaa": "10",
         "provincia": "Castell\u00f3",
         "texto": "Castell\u00f3n",
-        "codigo": "12"
+        "id": "46"
       }
     },
     {
@@ -60045,7 +60045,7 @@
         "cod_ccaa": "01",
         "provincia": "Huelva",
         "texto": "Huelva",
-        "codigo": "21"
+        "id": "47"
       }
     },
     {
@@ -61685,7 +61685,7 @@
         "cod_ccaa": "05",
         "provincia": "Santa Cruz de Tenerife",
         "texto": "Santa Cruz de Tenerife",
-        "codigo": "38"
+        "id": "48"
       }
     },
     {
@@ -63042,7 +63042,7 @@
         "cod_ccaa": "01",
         "provincia": "Sevilla",
         "texto": "Sevilla",
-        "codigo": "41"
+        "id": "49"
       }
     },
     {
@@ -64169,7 +64169,7 @@
         "cod_ccaa": "07",
         "provincia": "Valladolid",
         "texto": "Valladolid",
-        "codigo": "47"
+        "id": "50"
       }
     },
     {
@@ -64267,7 +64267,7 @@
         "cod_ccaa": "18",
         "provincia": "Ceuta",
         "texto": "Ceuta",
-        "codigo": "51"
+        "id": "51"
       }
     }
   ]
