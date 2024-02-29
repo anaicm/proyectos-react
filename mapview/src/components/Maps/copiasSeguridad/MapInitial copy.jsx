@@ -12,15 +12,15 @@ import {
   CapaTerremotosRecuento,
   addRouteLayer,
   
-} from "../funciones";
+} from "../../funciones";
 import {
   handleClusterClick,
   handleUnclusteredPointClick,
   handleClusterMouseEnter,
   handleClusterMouseLeave,
-} from "../funciones/eventosTerremotos";
+} from "../../funciones/eventosTerremotos";
 import {SetupPopup, 
-handleUnclusteredPointHover} from "../funciones/eventoHoverLeyenda";
+handleUnclusteredPointHover} from "../../funciones/eventoHoverLeyenda";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYWxlamFuZHJvLXBlcmV6IiwiYSI6ImNsczNrZG5kNDAwazQyaW84d21zeXViNDAifQ.LguyBzAlUB2A7aCRp0tTjQ";
