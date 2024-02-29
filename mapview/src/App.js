@@ -1,7 +1,7 @@
 import React from 'react';
 //import MapHoverOpacity from './components/Maps/MapHoverOpacity';
-//import MapProvincias from './components/Maps/MapProvincias';
-import MapPrincipal from './components/Maps/MapPrincipal';
+import MapProvincias from './components/Maps/MapProvincias';
+//import MapPrincipal from './components/Maps/MapPrincipal';
 //import Map from './components/Maps/Map';
 //import Icons from './components/Maps/Icons';
 //import MapIconsPersonalizados from './components/Maps/MapIconsPersonalizados';
@@ -16,7 +16,7 @@ import MapPrincipal from './components/Maps/MapPrincipal';
 function App() {
   return (
     <div>
-      <MapPrincipal />
+      <MapProvincias />
     </div>
   );
 }
