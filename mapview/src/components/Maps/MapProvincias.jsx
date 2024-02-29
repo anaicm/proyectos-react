@@ -13,8 +13,8 @@ const MapProvincias = () => {
   //declara un estado para el contenedor que guarda el mapa que se devuelve despues en el return.
   const mapContainerRef = useRef(null); //se tiene que poner
   const [map, setMap] = useState(null); //constante para guardar el mapa
-  const [selectedRegion, setSelectedRegion] = useState(1); //constante para guardar el mapa
-
+  const [selectedRegion, setSelectedRegion] = useState("3");
+  const datos = [{id:1, color: 'red'}, {id:2, color: 'blue'}, {id:3, color: 'green'}];
   // Initialize map when component mounts
   useEffect(() => {
     //la primera vez que carga el componente map, no tiene dependencias []
@@ -29,21 +29,29 @@ const MapProvincias = () => {
     map.on("style.load", () => {
       map.addSource("urban-provincias", {
         type: "geojson", //formato de lo que viene por la api
-        data: "http://localhost:3000/coords.geojson", //URL donde estan todos los datos
+        data: "http://localhost:3000/provinciasEspanolas.geojson", //URL donde estan todos los datos
       });
       map.addLayer({
         //capa para el relleno del poligono
         id: "urban-provincias-layer",
         type: "fill",
+        slot: "middle",
         source: "urban-provincias",
+        //filter: ["!=", ["get", "id"], selectedRegion],
         layout: {},
         paint: {
           "fill-color": "#627BC1",
+          //"fill-color": [
+            //"case",
+            //["==", ["get", "id"], selectedRegion], // Comprueba si es la región seleccionada
+            //"red", // Si es la región seleccionada, colorea diferente al recargar la página
+            //"#627BC1",
+          //],
           "fill-opacity": [
             "case",
             ["boolean", ["feature-state", "hover"], false],
-            1,
-            0.5,
+            0.8,
+            0.4,
           ],
         },
       });
@@ -51,7 +59,9 @@ const MapProvincias = () => {
         //capa para el borde del poligono
         id: "state-borders",
         type: "line",
+        slot: "top",
         source: "urban-provincias",
+        filter: ["!=", ["get", "id"], selectedRegion],
         layout: {},
         paint: {
           //"line-color": "#627BC1",=> poner solo un color
@@ -64,12 +74,39 @@ const MapProvincias = () => {
           ],
           //"line-width": 2,
           "line-width": [
-            //si hace hover cambia el ancho del borde a 3 de 1
+            //si hace hover cambia el ancho del borde a 2 de 1
             "case",
             ["boolean", ["feature-state", "hover"], false],
-            3,
+            2,
             1,
           ],
+        },
+      });
+      map.addLayer({
+        //capa para el borde del poligono que esta seleccionado en el estado selectedRegion
+        id: "other-provincia-borders",
+        type: "line",
+        slot: "top",
+        source: "urban-provincias",
+        filter: ["==", ["get", "id"], selectedRegion],
+        layout: {},
+        paint: {
+          //"line-color": "#627BC1",=> poner solo un color
+          "line-color": "white",
+          //"line-width": 2,
+          "line-width": 8,
+        },
+      });
+      map.addLayer({//capa para el inicio de la pagina que la region salga marcada en el estado selectedRegion 
+        id: "other-provincia-layer",
+        type: "fill",
+        source: "urban-provincias",
+        slot: "middle",
+        filter: ["==", ["get", "id"], selectedRegion],
+        layout: {},
+        paint: {
+          "fill-color": "#627BC1",
+          "fill-opacity": 1,
         },
       });
 
@@ -80,13 +117,15 @@ const MapProvincias = () => {
       //evento para cambiar la opacidad solo del id donde se encuentre el raton (hover)
       map.on("mousemove", "urban-provincias-layer", (e) => {
         if (e.features.length > 0) {
-          if (hoveredPolygonId !== null) {
+          if (hoveredPolygonId !== null && hoveredPolygonId !== selectedRegion) {
             map.setFeatureState(
               { source: "urban-provincias", id: hoveredPolygonId },
               { hover: false }
             );
           }
+          
           hoveredPolygonId = e.features[0].id;
+
           map.setFeatureState(
             { source: "urban-provincias", id: hoveredPolygonId },
             { hover: true }
@@ -95,7 +134,9 @@ const MapProvincias = () => {
       });
       //cuando el raton sale de la feature vuelve a ponerla en su estado inicial sin hover
       map.on("mouseleave", "urban-provincias-layer", () => {
-        if (hoveredPolygonId !== null) {
+        //si el id es distinto de null (hay id) => quita el hover (a todos los que tienen hover)
+        //y si el valor del estado selectedRegion es distinto al id no lo apagues (no quites el hover)
+        if (hoveredPolygonId !== null && hoveredPolygonId !== selectedRegion) {
           map.setFeatureState(
             { source: "urban-provincias", id: hoveredPolygonId },
             { hover: false }
@@ -116,13 +157,14 @@ const MapProvincias = () => {
       map.on("mouseleave", "urban-provincias-layer", () => {
         map.getCanvas().style.cursor = ""; // Restaurar cursor por defecto
         popup.remove();
+      
       });
     });
 
     setMap(map);
     // Clean up on unmount
     return () => map.remove();
-  }, []);
+  }, [selectedRegion]);
 
   return (
     <div>
