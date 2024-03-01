@@ -1,9 +1,7 @@
 //mostrar el mapa en la web normal en la web
-
 import React, { useRef, useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl";
 //import geojson from "../data/DataIcons";
-
 import "../../Map.css";
 
 mapboxgl.accessToken =
@@ -40,8 +38,9 @@ const MapProvincias = () => {
         //filter: ["!=", ["get", "id"], selectedRegion],
         layout: {},
         paint: {
-          "fill-color": "#627BC1",
-          
+          //"fill-color": "#627BC1",
+          "fill-color": ["get", "color"], // Obtener el color de la propiedad "color" de cada provincia
+
           //"fill-color": [
           //"case",
           //["==", ["get", "id"], selectedRegion], // Comprueba si es la región seleccionada
@@ -51,8 +50,8 @@ const MapProvincias = () => {
           "fill-opacity": [
             "case",
             ["boolean", ["feature-state", "hover"], false],
-            0.8,
-            0.4,
+            0.7,
+            0.2,
           ],
         },
       });
@@ -113,7 +112,6 @@ const MapProvincias = () => {
             ["==", ["get", "id"], selectedRegion],
             selectedColor, // Usar el color de la provincia seleccionada
             "#627BC1", // Color predeterminado
-            
           ],
           "fill-opacity": 1,
         },
@@ -124,19 +122,24 @@ const MapProvincias = () => {
         closeOnClick: false,
       });
       map.on("click", "hover-provincia-layer", (e) => {
-        e.preventDefault(); // Evitar recarga de página
-        const clickedFeature = e.features[0];
-        const provinciaColor = clickedFeature.properties.color;
-        setSelectedColor(provinciaColor);
+        if (map.getSource("urban-provincias")) {
+          e.preventDefault(); // Evitar recarga de página
+          const clickedFeature = e.features[0];
+          const provinciaColor = clickedFeature.properties.color;
+          setSelectedColor(provinciaColor);
+          setMap(map);
+        }
       });
       map.on("click", "urban-provincias-layer", (e) => {
-        e.preventDefault(); // Evitar recarga de página
-        const featureId = e.features[0].id;
-        setSelectedRegion(featureId);
-        // Obtener el color de la provincia seleccionada y actualizar el estado
-        const clickedFeature = e.features[0];
-        const provinciaColor = clickedFeature.properties.color;
-        setSelectedColor(provinciaColor);
+        if (map.getSource("urban-provincias")) {
+          e.preventDefault(); // Evitar recarga de página
+          const featureId = e.features[0].id;
+          setSelectedRegion(featureId);
+          // Obtener el color de la provincia seleccionada y actualizar el estado
+          const clickedFeature = e.features[0];
+          const provinciaColor = clickedFeature.properties.color;
+          setSelectedColor(provinciaColor);
+        }
       });
       //evento para cambiar la opacidad solo del id donde se encuentre el raton (hover)
       map.on("mousemove", "urban-provincias-layer", (e) => {
