@@ -31,6 +31,10 @@ const MapPrincipal = () => {
   const [mapZoom, setMapZoom] = useState(6);
   //constante para cambiar el mapa de noche a dia
   const [nightMode, setNightModeMode] = useState(false);
+  //constantes para el mapa provincias
+  const [selectedRegion, setSelectedRegion] = useState(2);
+  const [selectedColor, setSelectedColor] = useState("#00FF00");
+  //constantes para abrir cada mapa
   const [clusterOpen, setClusterOpen] = useState(false);
   const [urbansOpen, setUrbansOpen] = useState(false);
   const [urbansBosque, setUrbansBosque] = useState(false);
@@ -182,24 +186,25 @@ const MapPrincipal = () => {
         //si el mapa es distinto a la fuente del parametro
         map.addSource("urban-provincias", {
           type: "geojson", //formato de lo que viene por la api
-          data: "http://localhost:3000/coords.geojson", //URL donde estan todos los datos
+          data: "http://localhost:3000/provinciasEspanolas.geojson", //URL donde estan todos los datos
         });
       }
-
       //añade la capa
       map.addLayer({
         //capa para el relleno del poligono
         id: "urban-provincias-layer",
         type: "fill",
+        slot: "bottom",
         source: "urban-provincias",
+        //filter: ["!=", ["get", "id"], selectedRegion],
         layout: {},
         paint: {
           "fill-color": "#627BC1",
           "fill-opacity": [
             "case",
             ["boolean", ["feature-state", "hover"], false],
-            1,
-            0.5,
+            0.8,
+            0.4,
           ],
         },
       });
@@ -207,20 +212,14 @@ const MapPrincipal = () => {
         //capa para el borde del poligono
         id: "state-borders",
         type: "line",
+        slot: "bottom",
         source: "urban-provincias",
+        filter: ["!=", ["get", "id"], selectedRegion],
         layout: {},
         paint: {
-          //"line-color": "#627BC1",=> poner solo un color
-          "line-color": [
-            //si hace hover cambiar el color del borde a blanco de #627BC1
-            "case",
-            ["boolean", ["feature-state", "hover"], false],
-            "white",
-            "#627BC1",
-          ],
-          //"line-width": 2,
+          "line-color": "white", //=> poner solo un color
           "line-width": [
-            //si hace hover cambia el ancho del borde a 3 de 1
+            //si hace hover cambia el ancho del borde a 2 de 1
             "case",
             ["boolean", ["feature-state", "hover"], false],
             3,
@@ -228,21 +227,79 @@ const MapPrincipal = () => {
           ],
         },
       });
+      map.addLayer({
+        //capa para el borde del poligono que esta seleccionado en el estado selectedRegion
+        id: "other-provincia-borders",
+        type: "line",
+        slot: "top",
+        source: "urban-provincias",
+        filter: ["==", ["get", "id"], selectedRegion],
+        layout: {},
+        paint: {
+          //"line-color": "#627BC1",=> poner solo un color
+          "line-color": "white",
+          //"line-width": 2,
+          "line-width": 8,
+        },
+      });
+      map.addLayer({
+        //capa para el inicio de la pagina que la region salga marcada en el estado selectedRegion
+        id: "hover-provincia-layer",
+        type: "fill",
+        source: "urban-provincias",
+        slot: "bottom",
+        filter: ["==", ["get", "id"], selectedRegion],
+        layout: {},
+        paint: {
+          //"fill-color": "#627BC1",
+          "fill-color": [
+            "case",
+            ["==", ["get", "id"], selectedRegion],
+            selectedColor, // Usar el color de la provincia seleccionada
+            "#627BC1", // Color predeterminado
+          ],
+          "fill-opacity": 1,
+        },
+      });
       const popup = new mapboxgl.Popup({
         closeButton: false,
         closeOnClick: false,
       });
       let hoveredPolygonId = null;
+      map.on("click", "hover-provincia-layer", (e) => {
+        if (map.getSource("urban-provincias")) {
+          e.preventDefault(); // Evitar recarga de página
+          const clickedFeature = e.features[0];
+          const provinciaColor = clickedFeature.properties.color;
+          setSelectedColor(provinciaColor);
+        }
+      });
+      map.on("click", "urban-provincias-layer", (e) => {
+        if (map.getSource("urban-provincias")) {
+          e.preventDefault(); // Evitar recarga de página
+          const featureId = e.features[0].id;
+          setSelectedRegion(featureId);
+          // Obtener el color de la provincia seleccionada y actualizar el estado
+          const clickedFeature = e.features[0];
+          const provinciaColor = clickedFeature.properties.color;
+          setSelectedColor(provinciaColor);
+        }
+      });
       //evento para cambiar la opacidad solo del id donde se encuentre el raton (hover)
       map.on("mousemove", "urban-provincias-layer", (e) => {
         if (e.features.length > 0) {
-          if (hoveredPolygonId !== null) {
+          if (
+            hoveredPolygonId !== null &&
+            hoveredPolygonId !== selectedRegion
+          ) {
             map.setFeatureState(
               { source: "urban-provincias", id: hoveredPolygonId },
               { hover: false }
             );
           }
+
           hoveredPolygonId = e.features[0].id;
+
           map.setFeatureState(
             { source: "urban-provincias", id: hoveredPolygonId },
             { hover: true }
@@ -251,7 +308,9 @@ const MapPrincipal = () => {
       });
       //cuando el raton sale de la feature vuelve a ponerla en su estado inicial sin hover
       map.on("mouseleave", "urban-provincias-layer", () => {
-        if (hoveredPolygonId !== null) {
+        //si el id es distinto de null (hay id) => quita el hover (a todos los que tienen hover)
+        //y si el valor del estado selectedRegion es distinto al id no lo apagues (no quites el hover)
+        if (hoveredPolygonId !== null && hoveredPolygonId !== selectedRegion) {
           map.setFeatureState(
             { source: "urban-provincias", id: hoveredPolygonId },
             { hover: false }
@@ -281,6 +340,8 @@ const MapPrincipal = () => {
         //si el mapa es esa fuente que entra por parametro
         map.removeLayer("urban-provincias-layer"); //elimina la capa =>id=capa
         map.removeLayer("state-borders"); //elimina la capa =>id=capa
+        map.removeLayer("hover-provincia-layer"); //elimina la capa =>id=capa
+        map.removeLayer("other-provincia-borders"); //elimina la capa =>id=capa
         map.removeSource("urban-provincias"); //elimina la fuente =>id=fuente
       }
     }
