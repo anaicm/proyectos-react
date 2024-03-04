@@ -84,7 +84,7 @@ const MapProvincias = () => {
       });
       map.addLayer({
         //capa para el borde del poligono que esta seleccionado en el estado selectedRegion
-        id: "selecter-provincia-borders",
+        id: "selected-provincia-borders",
         type: "line",
         slot: "top",
         source: "urban-provincias",
@@ -99,7 +99,7 @@ const MapProvincias = () => {
       });
       map.addLayer({
         //capa para el inicio de la pagina que la region salga marcada en el estado selectedRegion
-        id: "selecte-provincia-layer",
+        id: "selected-provincia-layer",
         type: "fill",
         source: "urban-provincias",
         slot: "bottom",
@@ -115,6 +115,7 @@ const MapProvincias = () => {
           //   "#627BC1", // Color predeterminado
           // ],
           "fill-opacity": 1,
+          'fill-opacity-transition': { duration: 0 }
         },
       });
 
@@ -128,31 +129,28 @@ const MapProvincias = () => {
       //     setSelectedColor(provinciaColor);
       // });
       map.on("click", "urban-provincias-layer", (e) => {
-
-        const featureId = e.features[0].id;
-        map.setFilter("selecte-provincia-layer", [
-          "==",
-          ["get", "id"],
-          featureId,
-        ]);
-        map.setFilter("selecter-provincia-borders", [
-          "==",
-          ["get", "id"],
-          featureId,
-        ]);  
-        //cuando cambia de color la transicion sea de cero
-        map.setPaintProperty('selecte-provincia-layer', 'fill-color-transition', {
-          duration: 0
-        });
         // Obtener el color de la provincia seleccionada y actualizar el estado
         const clickedFeature = e.features[0];
         const provinciaColor = clickedFeature.properties.color;
         map.setPaintProperty(
-          "selecte-provincia-layer",
+          "selected-provincia-layer",
           "fill-color",
           provinciaColor
         );
-               
+        const featureId = e.features[0].id;
+
+          //setSelectedRegion(featureId);
+          map.setFilter("selected-provincia-layer", [
+            "==",
+            ["get", "id"],
+            featureId,
+          ]);
+          map.setFilter("selected-provincia-borders", [
+            "==",
+            ["get", "id"],
+            featureId,
+          ]);
+
         //setSelectedColor(provinciaColor);
       });
       //evento para cambiar la opacidad solo del id donde se encuentre el raton (hover)
