@@ -95,14 +95,18 @@ const MapDistancias = () => {
       closeButton: false,
       closeOnClick: false,
     });
+    let firstPoint = null;
     map.on("mouseenter", "points", (e) => {
       map.getCanvas().style.cursor = "pointer";
-      const coordinates = e.features[0].geometry.coordinates.slice();//saca las coordenadas de los puntos
-
-      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+      const coordinates = e.features[0].geometry.coordinates.slice(); //saca las coordenadas de los puntos
+      if (!firstPoint) {
+        firstPoint = coordinates;
+        popup.setLngLat(coordinates).setHTML("Distancia: 0.00 Km").addTo(map);
+      } else {
+        const distance = turf.distance(firstPoint, coordinates, { units: 'kilometers' });
+        popup.setLngLat(coordinates).setHTML(`Distancia: ${distance.toFixed(2)} km`).addTo(map);
+       //firstPoint = null; // Reiniciamos el primer punto para futuros cálculos
       }
-      popup.setLngLat(coordinates).setHTML(coordinates).addTo(map);
     });
     map.on("mouseleave", "points", () => {
       map.getCanvas().style.cursor = ""; // Restaurar cursor por defecto
@@ -149,6 +153,7 @@ const MapDistancias = () => {
         distanceContainer.appendChild(value);
       }
       map.getSource("geojson").setData(geojson);
+      
     });
     map.on("mousemove", (e) => {
       const features = map.queryRenderedFeatures(e.point, {
