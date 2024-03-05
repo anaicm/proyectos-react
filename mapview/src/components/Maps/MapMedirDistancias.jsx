@@ -3,7 +3,7 @@ import React, { useRef, useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl";
 //import geojson from "../data/DataIcons";
 import "../../Map.css";
-import * as turf from '@turf/turf';
+import * as turf from "@turf/turf";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYWxlamFuZHJvLXBlcmV6IiwiYSI6ImNsczNrZG5kNDAwazQyaW84d21zeXViNDAifQ.LguyBzAlUB2A7aCRp0tTjQ";
@@ -31,7 +31,7 @@ const MapDistancias = () => {
       type: "FeatureCollection",
       features: [],
     };
-    
+
     const linestring = {
       type: "Feature",
       geometry: {
@@ -45,20 +45,32 @@ const MapDistancias = () => {
         type: "geojson", //formato de lo que viene por la api
         data: "http://localhost:3000/provinciasEspanolas.geojson", //URL donde estan todos los datos
       });
-      //Objeto geojson que define el componente 
+      //Objeto geojson que define el componente
       map.addSource("geojson", {
         type: "geojson",
         data: geojson,
       });
       //capas
-      //capa para los puntos 
       map.addLayer({
-        id: "measure-points",
+        id: "popup-layer",
+        type: "circle",
+        source: "urban-distancias",
+        paint: {
+          "circle-radius": 0,
+          "circle-opacity": 0, // Hacer la capa completamente transparente
+        },
+        filter: ["in", "$type", "Point"],
+      });
+      //capa para los puntos
+      map.addLayer({
+        id: "points",
         type: "circle",
         source: "geojson",
         paint: {
-          "circle-radius": 5,
-          "circle-color": "#000",
+          "circle-radius": 5, //define el radio
+          "circle-color": "#fff", //define el color
+          "circle-stroke-color": "#000", //define el borde del círculo
+          "circle-stroke-width": 3, //define el ancho
         },
         filter: ["in", "$type", "Point"],
       });
@@ -72,16 +84,34 @@ const MapDistancias = () => {
           "line-join": "round",
         },
         paint: {
-          "line-color": "#FF0000",
-          "line-width": 10,
+          "line-color": "#000",
+          "line-width": 3,
         },
         filter: ["in", "$type", "LineString"],
       });
     });
     //eventos
+    const popup = new mapboxgl.Popup({
+      closeButton: false,
+      closeOnClick: false,
+    });
+    map.on("mouseenter", "points", (e) => {
+      map.getCanvas().style.cursor = "pointer";
+      const coordinates = e.features[0].geometry.coordinates.slice();//saca las coordenadas de los puntos
+
+      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+      }
+      popup.setLngLat(coordinates).setHTML(coordinates).addTo(map);
+    });
+    map.on("mouseleave", "points", () => {
+      map.getCanvas().style.cursor = ""; // Restaurar cursor por defecto
+      popup.remove();
+    });
+
     map.on("click", (e) => {
       const features = map.queryRenderedFeatures(e.point, {
-        layers: ["measure-points"],
+        layers: ["points"],
       });
       if (geojson.features.length > 1) geojson.features.pop();
       // limpia el valor
@@ -122,7 +152,7 @@ const MapDistancias = () => {
     });
     map.on("mousemove", (e) => {
       const features = map.queryRenderedFeatures(e.point, {
-        layers: ["measure-points"],
+        layers: ["points"],
       });
       // Change the cursor to a pointer when hovering over a point on the map.
       // Otherwise cursor is a crosshair.
